@@ -1,0 +1,61 @@
+next_gen_recipe_app/
+├── app/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── AndroidManifest.xml
+│   │   │   ├── java/com/example/next_gen_recipe_app/
+│   │   │   │   ├── MyApp.kt                           // Application class; initializes global components (e.g., DataStore, MLKitHelper)
+│   │   │   │   │
+│   │   │   │   ├── data/
+│   │   │   │   │   ├── local/
+│   │   │   │   │   │   ├── AppDatabase.kt             // Room Database definition
+│   │   │   │   │   │   ├── dao/
+│   │   │   │   │   │   │   └── RecipeDao.kt           // DAO for Recipe CRUD operations
+│   │   │   │   │   │   └── entities/
+│   │   │   │   │   │       ├── Recipe.kt              // Recipe entity (id, title, image, summary, ingredients, steps, isFavorite)
+│   │   │   │   │   │       └── UserPreference.kt      // Entity for lightweight user settings (e.g., dark mode)
+│   │   │   │   │   ├── remote/
+│   │   │   │   │   │   ├── SpoonacularApi.kt          // Retrofit interface for Spoonacular endpoints (search, details)
+│   │   │   │   │   │   └── dto/
+│   │   │   │   │   │       ├── RecipeDto.kt             // DTO for individual recipe from Spoonacular
+│   │   │   │   │   │       └── RecipeSearchResponse.kt  // DTO for recipe search responses
+│   │   │   │   │   └── repository/
+│   │   │   │   │       ├── RecipeRepository.kt          // Central repository coordinating Room, API calls, and ML Kit-based searches
+│   │   │   │   │       ├── SyncWorker.kt                // WorkManager worker to periodically fetch fresh recipes and update local data
+│   │   │   │   │       └── MLKitHelper.kt                 // Utility class for ML Kit text recognition (scans image, extracts food names, triggers recipe search)
+│   │   │   │   ├── ui/
+│   │   │   │   │   ├── components/
+│   │   │   │   │   │   ├── RecipeCard.kt                // Reusable composable card for displaying a recipe (includes image, title, summary, animations)
+│   │   │   │   │   │   ├── AnimatedTimer.kt             // Composable for the standard cooking timer with animation
+│   │   │   │   │   │   ├── ShimmerPlaceholder.kt          // Composable for shimmer effect during image loading
+│   │   │   │   │   │   └── ImagePicker.kt               // Composable component for capturing/selecting an image for scanning
+│   │   │   │   │   ├── screens/
+│   │   │   │   │   │   ├── HomeScreen.kt                // Home screen with Scaffold (TopAppBar, FAB with rotation, Bottom Navigation, dark mode toggle)
+│   │   │   │   │   │   ├── RecipeListScreen.kt          // Screen displaying recipes using a LazyColumn and RecipeCard composables
+│   │   │   │   │   │   ├── CustomRecipeListScreen.kt    // Custom list screen with IconToggleButtons for favorites and navigation to details
+│   │   │   │   │   │   ├── RecipeDetailScreen.kt        // Detailed view of a selected recipe with expandable text and line drawing animations for preparation steps
+│   │   │   │   │   │   ├── CategoryGridScreen.kt        // Screen with a staggered grid layout (LazyVerticalGrid) for recipe categories
+│   │   │   │   │   │   └── FoodScanScreen.kt            // New screen for image insertion, ML Kit text recognition, and triggering recipe search based on scanned food items
+│   │   │   │   │   ├── navigation/
+│   │   │   │   │   │   ├── NavGraph.kt                  // Navigation graph defining routes and navigation actions using Compose's NavController
+│   │   │   │   │   │   └── Routes.kt                    // Centralized route constants for all screens
+│   │   │   │   │   └── theme/
+│   │   │   │   │       ├── Color.kt                     // Custom color palette definitions
+│   │   │   │   │       ├── Type.kt                      // Typography definitions
+│   │   │   │   │       ├── Shape.kt                     // Shape definitions (rounded corners, etc.)
+│   │   │   │   │       └── Theme.kt                     // Material Design Theme composable wrapping the app’s UI
+│   │   │   │   ├── utils/
+│   │   │   │   │   ├── NetworkUtils.kt                  // Helper functions to check network connectivity and manage network errors
+│   │   │   │   │   ├── ErrorHandling.kt                 // Centralized error handling utilities (e.g., sealed classes for API errors)
+│   │   │   │   │   └── Extensions.kt                    // Kotlin extension functions to simplify Compose and data operations
+│   │   │   ├── res/
+│   │   │   │   ├── layout/                              // (Optional) XML layouts for fallback or hybrid UI components
+│   │   │   │   ├── values/
+│   │   │   │   │   ├── colors.xml
+│   │   │   │   │   ├── themes.xml
+│   │   │   │   │   └── styles.xml
+│   │   │   └── local.properties                       // Contains local properties, such as your Spoonacular API key (referenced via BuildConfig)
+│   │   ├── test/                                      // Unit tests for ViewModels, Repository, etc.
+│   │   └── androidTest/                               // Instrumentation tests for UI, navigation, and integration testing
+├── build.gradle.kts                                   // Project-level build configuration
+└── settings.gradle.kts                                // Gradle project settings
